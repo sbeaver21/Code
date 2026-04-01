@@ -1,0 +1,28 @@
+This is the template directory, it should contain the following:
+
+   BUILD.txt: describes build procedure
+   COPYRIGHT.spdx.template: contains copyright information for this project
+   INSTALL.txt: describes installation steps for ESXi
+   Makefile: should be mostly untouched, change GOBUILD_TARGET
+   template.defs: cayman overrides for your project
+   template.make: project makefile
+   wrapper.make: cayman make wrapper
+
+Style guidelines:
+
+   You should use spaces, not tabs (unless necessary for makefiles), and
+   tabs should be 3 spaces.
+
+   Lines should not be over 80 characters, unless absolutely necessary.
+
+General help:
+
+   The names of template.defs and template.make should correspond
+   to the name of the directory in which they live.
+
+   Makefile:9 GOBUILD_TARGET should have the same name as the target in
+   support/gobuild/targets/__init__.py:18
+
+   The project source dir should be named 'src', see template.make:3
+
+   See https://wiki.eng.vmware.com/Cayman for more information.

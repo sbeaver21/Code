@@ -1,0 +1,52 @@
+From 75529351857ea85aa3d829aeca0054822df40601 Mon Sep 17 00:00:00 2001
+From: Bharath Ramesh <rameshb@vmware.com>
+Date: Tue, 21 Oct 2014 17:27:23 -0700
+Subject: [PATCH 6/7] Build disabled extensions due to incorrect winnt version
+
+Microsoft decided to split the include files in two directories. This causes the
+winnt version supported by the SDK to be detected incorrectly. Fix this to build
+all supported extensions.
+
+Reviewed by:
+Review URL:
+---
+ setup.py | 21 ++++++++++++++-------
+ 1 file changed, 14 insertions(+), 7 deletions(-)
+
+diff --git a/setup.py b/setup.py
+index 83dcbe4..590d97e 100644
+--- a/setup.py
++++ b/setup.py
+@@ -767,15 +767,22 @@ class my_build_ext(build_ext):
+         # location
+         if get_build_version() < 11.0: # check if python was built with vs2012
+             extra = os.path.join(sdk_dir, 'include')
++            # should not be possible for the SDK dirs to already be in our
++            # include_dirs - they may be in the registry etc from MSVC, but
++            # those aren't reflected here...
++            assert extra not in self.include_dirs
++            # and we will not work as expected if the dirs don't exist
++            assert os.path.isdir(extra), "%s doesn't exist!" % (extra,)
++            self.compiler.add_include_dir(extra)
+         else:
++            extra = os.path.join(sdk_dir, 'include', 'shared')
++            assert extra not in self.include_dirs
++            assert os.path.isdir(extra), "%s doesn't exist!" % (extra,)
++            self.compiler.add_include_dir(extra)
+             extra = os.path.join(sdk_dir, 'include', 'um')
+-        # should not be possible for the SDK dirs to already be in our
+-        # include_dirs - they may be in the registry etc from MSVC, but
+-        # those aren't reflected here...
+-        assert extra not in self.include_dirs
+-        # and we will not work as expected if the dirs don't exist
+-        assert os.path.isdir(extra), "%s doesn't exist!" % (extra,)
+-        self.compiler.add_include_dir(extra)
++            assert extra not in self.include_dirs
++            assert os.path.isdir(extra), "%s doesn't exist!" % (extra,)
++            self.compiler.add_include_dir(extra)
+         # and again for lib dirs.
+         # rameshb: Newer Windows SDK have the library files in a different
+         # location
+-- 
+2.8.0.windows.1
+

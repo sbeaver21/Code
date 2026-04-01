@@ -1,0 +1,8 @@
+{
+  "SHOULD_USE_NEW_MONITORING_TASK": true,
+  "IDENTIFIER_PREFIX": "com.vmware.%(product_name)s.installer",
+  "SHOULD_USE_3_0_FLOW": true,
+  "TELEMETRY_USE_PRODUCTION": true,
+  "ENABLE_REST_SERVER": true,
+  "ENABLE_TELEMETRY": true
+}

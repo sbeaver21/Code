@@ -1,0 +1,34 @@
+From b7872779cd8bc788f33bd7fcd3dfc4b22374c962 Mon Sep 17 00:00:00 2001
+From: "Md.Borhan Uddin" <uddinm@vmware.com>
+Date: Thu, 22 Jun 2017 18:05:55 -0700
+Subject: [PATCH 4/4] Temporarily remove m2r from dependency
+
+m2r isn't used in our cayman gobuild environment and it doesn't
+have any effect on build deliverables i.e., output python module isn't
+changed. Thus it is safe to remove temporarily, and might be added
+back later, when its following dependency modules' cayman repo and mirror
+are created-
+   docutils,
+   mistune
+---
+ setup.py | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/setup.py b/setup.py
+index f9c224a..5bca722 100644
+--- a/setup.py
++++ b/setup.py
+@@ -22,9 +22,7 @@ setup(
+     long_description=long_description,
+     packages=find_packages(exclude=[]),
+     package_dir={'automat': 'automat'},
+-    setup_requires=[
+-        'm2r',
+-    ],
++    setup_requires=[],
+     install_requires=[
+         "attrs",
+         "six",
+-- 
+2.8.0.windows.1
+

@@ -1,0 +1,23 @@
+From cebdcb9aae69ed9190e46359fb2415b3e2a13dce Mon Sep 17 00:00:00 2001
+From: "Amber Brown (HawkOwl)" <hawkowl@atleastfornow.net>
+Date: Sat, 23 Sep 2017 20:18:14 +1000
+Subject: [PATCH] 17.9.1dev0, so local installs are bigger
+
+---
+ src/twisted/_version.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/twisted/_version.py b/src/twisted/_version.py
+index 5e2ca81..68ff344 100644
+--- a/src/twisted/_version.py
++++ b/src/twisted/_version.py
+@@ -7,5 +7,5 @@ Provides Twisted version information.
+ 
+ from incremental import Version
+ 
+-__version__ = Version('Twisted', 17, 9, 0)
++__version__ = Version('Twisted', 17, 9, 1, dev=0)
+ __all__ = ["__version__"]
+-- 
+1.8.5.6
+

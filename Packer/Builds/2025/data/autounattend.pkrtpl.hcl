@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unattend xmlns="urn:schemas-microsoft-com:unattend">
+   <settings pass="windowsPE">
+      <component xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Microsoft-Windows-International-Core-WinPE" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+         <SetupUILanguage>
+            <UILanguage>${vm_inst_os_language}</UILanguage>
+         </SetupUILanguage>
+         <InputLocale>${vm_inst_os_keyboard}</InputLocale>
+         <SystemLocale>${vm_inst_os_language}</SystemLocale>
+         <UILanguage>${vm_inst_os_language}</UILanguage>
+         <UILanguageFallback>${vm_inst_os_language}</UILanguageFallback>
+         <UserLocale>${vm_inst_os_language}</UserLocale>
+      </component>
+      <component xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Microsoft-Windows-PnpCustomizationsWinPE" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+         <DriverPaths>
+            <PathAndCredentials wcm:action="add" wcm:keyValue="1">
+               <Path>E:\Program Files\VMware\VMware Tools\Drivers\pvscsi\Win8\amd64</Path>
+            </PathAndCredentials>
+         </DriverPaths>
+      </component>
+      <component xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Microsoft-Windows-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+         <DiskConfiguration>
+            <Disk wcm:action="add">
+               <DiskID>0</DiskID>
+               <WillWipeDisk>true</WillWipeDisk>
+               <CreatePartitions>
+                  <!-- Windows RE Tools partition -->
+                  <CreatePartition wcm:action="add">
+                     <Order>1</Order>
+                     <Type>Primary</Type>
+                     <Size>800</Size>
+                  </CreatePartition>
+                  <!-- System partition (ESP) -->
+                  <CreatePartition wcm:action="add">
+                     <Order>2</Order>
+                     <Type>EFI</Type>
+                     <Size>100</Size>
+                  </CreatePartition>
+                  <!-- Microsoft reserved partition (MSR) -->
+                  <CreatePartition wcm:action="add">
+                     <Order>3</Order>
+                     <Type>MSR</Type>
+                     <Size>128</Size>
+                  </CreatePartition>
+                  <!-- Windows partition -->
+                  <CreatePartition wcm:action="add">
+                     <Order>4</Order>
+                     <Type>Primary</Type>
+                     <Extend>true</Extend>
+                  </CreatePartition>
+               </CreatePartitions>
+               <ModifyPartitions>
+                  <!-- Windows RE Tools partition -->
+                  <ModifyPartition wcm:action="add">
+                     <Order>1</Order>
+                     <PartitionID>1</PartitionID>
+                     <Label>WINRE</Label>
+                     <Format>NTFS</Format>
+                     <TypeID>DE94BBA4-06D1-4D40-A16A-BFD50179D6AC</TypeID>
+                  </ModifyPartition>
+                  <!-- System partition (ESP) -->
+                  <ModifyPartition wcm:action="add">
+                     <Order>2</Order>
+                     <PartitionID>2</PartitionID>
+                     <Label>System</Label>
+                     <Format>FAT32</Format>
+                  </ModifyPartition>
+                  <!-- MSR partition does not need to be modified -->
+                  <ModifyPartition wcm:action="add">
+                     <Order>3</Order>
+                     <PartitionID>3</PartitionID>
+                  </ModifyPartition>
+                  <!-- Windows partition -->
+                  <ModifyPartition wcm:action="add">
+                     <Order>4</Order>
+                     <PartitionID>4</PartitionID>
+                     <Label>OS</Label>
+                     <Letter>C</Letter>
+                     <Format>NTFS</Format>
+                  </ModifyPartition>
+               </ModifyPartitions>
+            </Disk>
+         </DiskConfiguration>
+         <ImageInstall>
+            <OSImage>
+               <InstallFrom>
+                  <MetaData wcm:action="add">
+                     <Key>/IMAGE/NAME</Key>
+                     <Value>${vm_inst_os_image}</Value>
+                  </MetaData>
+               </InstallFrom>
+               <InstallTo>
+                  <DiskID>0</DiskID>
+                  <PartitionID>4</PartitionID>
+               </InstallTo>
+            </OSImage>
+         </ImageInstall>
+         <UserData>
+            <AcceptEula>true</AcceptEula>
+            <FullName>DIIT</FullName>
+            <Organization>NYC_DOE</Organization>
+            %{if vm_inst_os_eval != true ~}
+            <ProductKey>
+               <Key>${vm_inst_os_key}</Key>
+               <WillShowUI>OnError</WillShowUI>
+            </ProductKey>
+            %{ endif ~}
+         </UserData>
+         <EnableFirewall>false</EnableFirewall>
+      </component>
+   </settings>
+   <settings pass="offlineServicing">
+      <component xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Microsoft-Windows-LUA-Settings" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+         <EnableLUA>false</EnableLUA>
+      </component>
+   </settings>
+   <settings pass="generalize">
+      <component xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Microsoft-Windows-Security-SPP" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+         <SkipRearm>1</SkipRearm>
+      </component>
+   </settings>
+   <settings pass="specialize">
+      <component xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+         <OEMInformation>
+            <HelpCustomized>false</HelpCustomized>
+         </OEMInformation>
+         <TimeZone>${vm_guest_os_timezone}</TimeZone>
+		 <ComputerName>${vm_guest_os_name}</ComputerName>
+		 <RegisteredOwner>NYC DOE</RegisteredOwner>
+		 <RegisteredOrganization>DOE DIIT</RegisteredOrganization>
+      </component>
+      <component xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Microsoft-Windows-ServerManager-SvrMgrNc" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+         <DoNotOpenServerManagerAtLogon>true</DoNotOpenServerManagerAtLogon>
+      </component>
+      <component xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Microsoft-Windows-OutOfBoxExperience" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+         <DoNotOpenInitialConfigurationTasksAtLogon>true</DoNotOpenInitialConfigurationTasksAtLogon>
+      </component>
+      <component xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Microsoft-Windows-Security-SPP-UX" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+         <SkipAutoActivation>true</SkipAutoActivation>
+      </component>
+   </settings>
+   <settings pass="oobeSystem">
+      <component xmlns:wcm="http://schemas.microsoft.com/WMIConfig/2002/State" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="Microsoft-Windows-Shell-Setup" processorArchitecture="amd64" publicKeyToken="31bf3856ad364e35" language="neutral" versionScope="nonSxS">
+         <UserAccounts>
+            <AdministratorPassword>
+               <Value>VwBlAGwAYwBvAG0AZQAuADEAMgAzAEEAZABtAGkAbgBpAHMAdAByAGEAdABvAHIAUABhAHMAcwB3AG8AcgBkAA==</Value>
+               <PlainText>false</PlainText>
+            </AdministratorPassword>
+            <LocalAccounts>
+               <LocalAccount wcm:action="add">
+                 <Name>!Admin!</Name>
+                 <DisplayName/>
+                 <Group>Administrators</Group>
+                 <Password>
+                   <Value>IQBuAHMAZQBjAHUAcgAzAFAAYQBzAHMAdwBvAHIAZAA=</Value>
+                   <PlainText>false</PlainText>
+                 </Password>
+              </LocalAccount>
+            </LocalAccounts>
+         </UserAccounts>
+		 <AutoLogon>
+		    <Username>!Admin!</Username>
+			<Enabled>true</Enabled>
+            <Password>
+               <Value>IQBuAHMAZQBjAHUAcgAzAFAAYQBzAHMAdwBvAHIAZAA=</Value>
+               <PlainText>false</PlainText>
+            </Password>
+         </AutoLogon>
+         <OOBE>
+            <HideEULAPage>true</HideEULAPage>
+            <HideLocalAccountScreen>true</HideLocalAccountScreen>
+            <HideOEMRegistrationScreen>true</HideOEMRegistrationScreen>
+            <HideOnlineAccountScreens>true</HideOnlineAccountScreens>
+            <HideWirelessSetupInOOBE>true</HideWirelessSetupInOOBE>
+            <NetworkLocation>Work</NetworkLocation>
+            <ProtectYourPC>2</ProtectYourPC>
+         </OOBE>
+         <FirstLogonCommands>
+            <SynchronousCommand wcm:action="add">
+               <CommandLine>%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe -Command "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Force"</CommandLine>
+               <Description>Set Execution Policy 64-Bit</Description>
+               <Order>1</Order>
+               <RequiresUserInput>true</RequiresUserInput>
+            </SynchronousCommand>
+            <SynchronousCommand wcm:action="add">
+               <CommandLine>%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe -Command "Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Force"</CommandLine>
+               <Description>Set Execution Policy 32-Bit</Description>
+               <Order>2</Order>
+               <RequiresUserInput>true</RequiresUserInput>
+            </SynchronousCommand>
+			<SynchronousCommand wcm:action="add">
+			   <CommandLine>reg add HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip6\Parameters /v DisabledComponents /t REG_DWORD /d 0xff /f</CommandLine>
+               <Description>Disable IPv6</Description>
+			   <Order>3</Order>
+            </SynchronousCommand>
+            <SynchronousCommand wcm:action="add">
+               <CommandLine>%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe -File F:\windows-vmtools.ps1</CommandLine>
+               <Order>4</Order>
+               <Description>Install VMware Tools</Description>
+            </SynchronousCommand>
+			<SynchronousCommand wcm:action="add">
+               <CommandLine>%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe -File F:\temp-network.ps1</CommandLine>
+               <Order>5</Order>
+               <Description>Configure Temp Networking</Description>
+            </SynchronousCommand>
+            <SynchronousCommand wcm:action="add">
+               <CommandLine>%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe -File F:\windows-init.ps1</CommandLine>
+               <Order>6</Order>
+               <Description>Initial Configuration</Description>
+            </SynchronousCommand>
+			<SynchronousCommand wcm:action="add">
+               <CommandLine>%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe -Command "Copy-Item -Path 'F:\CD' -Destination 'C:\CD' -Recurse"</CommandLine>
+               <Order>7</Order>
+               <Description>Copy CD Content Local</Description>
+            </SynchronousCommand>
+			<SynchronousCommand wcm:action="add">
+               <CommandLine>%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe -Command "Copy-Item -Path 'F:\Temp' -Destination 'C:\Temp' -Recurse"</CommandLine>
+               <Order>8</Order>
+               <Description>Copy Temp Content Local</Description>
+            </SynchronousCommand>
+			<SynchronousCommand wcm:action="add">
+               <CommandLine>%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe -Command "Set-ItemProperty -LiteralPath 'C:\CD' -Name Attributes -Value Hidden"</CommandLine>
+               <Order>9</Order>
+               <Description>Make Admin CD Folder Hidden</Description>
+            </SynchronousCommand>
+			<SynchronousCommand wcm:action="add">
+               <CommandLine>%SystemRoot%\system32\WindowsPowerShell\v1.0\powershell.exe -File F:\doe-init.ps1</CommandLine>
+               <Order>10</Order>
+			   <Description>DoE Customization</Description>
+            </SynchronousCommand>
+         </FirstLogonCommands>
+      </component>
+   </settings>
+</unattend>

@@ -1,0 +1,154 @@
+<?xml version="1.0" ?>
+<disclosure xmlns="http://osstp.eng.vmware.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://osstp.eng.vmware.com buildodpx.xsd">
+	<name>
+		twisted
+	</name>
+	<version>
+		twisted-17.9.0
+	</version>
+	<category>
+		Cayman
+	</category>
+	<components>
+		<component branch="vmware-latest-python-3.5" changenumber="198f33e6a19bbf0745a6eda43b7254d10fb8570f">
+			cayman_automat
+		</component>
+		<component branch="master" changenumber="2f5b0602f5768b56cbc542935df9884549dd906c">
+			cayman
+		</component>
+		<component branch="vcsa-cli-installer" changenumber="52f1f8ea2a995752028fd61c3f467caeeba97437">
+			cayman_constantly
+		</component>
+		<component branch="vmware-master" changenumber="790fba996a10b8807c49a0c1c49eab45e64743cc">
+			cayman_hyperlink
+		</component>
+		<component branch="vmware-latest-python-3.5" changenumber="76c9edab935a8e8d8d03e35fce4c320e6f33862e">
+			cayman_incremental
+		</component>
+		<component branch="vmware-latest-python-3.5" changenumber="a9579257b2bcb091dd235e028386cf46a56edb2d">
+			cayman_python_attrs
+		</component>
+		<component branch="vmware-python-3.5-latest-openssl-1.0.2" changenumber="a66dc34a9d8884f86fcbec3396c1aa883e6fd086">
+			cayman_python
+		</component>
+		<component branch="vcsa-cli-installer" changenumber="d711463d4af4f7ad970c70b2270ab81b3d17ba50">
+			cayman_setuptools
+		</component>
+		<component branch="six-latest-python-3.5" changenumber="6df53a72d7152b63107d1429f0092b8cf536332b">
+			cayman_six
+		</component>
+		<component branch="vcsa-cli-installer" changenumber="7ad15ff8d022ec5f84873bb349d585c81b3fb54e">
+			cayman_zope_interface
+		</component>
+	</components>
+	<build suffix="win64">
+		<target>
+			win64_vc140
+		</target>
+		<files>
+			<file>
+				twisted-twisted-17.9.0.tar.gz
+			</file>
+			<file>
+				README
+			</file>
+			<file>
+				twisted.spec
+			</file>
+		</files>
+		<process>
+			<execute>
+				tar zxvf twisted-twisted-17.9.0.tar.gz
+			</execute>
+			<execute>
+				cd twisted-twisted-17.9.0
+			</execute>
+			<execute>
+				cd .
+			</execute>
+			<execute>
+				set TMP=d:/build/ob/bora-7542210\tmp
+			</execute>
+			<execute>
+				set PATH=C:\Windows\system32;C:\Windows
+			</execute>
+			<execute>
+				set SystemDrive=C:
+			</execute>
+			<execute>
+				set TEMP=d:/build/ob/bora-7542210\tmp
+			</execute>
+			<execute>
+				set SystemRoot=C:\Windows
+			</execute>
+			<execute>
+				reg.exe query HKLM\SOFTWARE\Microsoft\Windows Kits\Installed Roots /v KitsRoot10
+			</execute>
+			<execute>
+				reg.exe query HKLM\SOFTWARE\Microsoft\Windows Kits\Installed Roots /v KitsRoot10
+			</execute>
+			<execute>
+				reg.exe query HKLM\SOFTWARE\Microsoft\VisualStudio\SxS\VS7 /v 14.0
+			</execute>
+			<execute>
+				reg.exe query HKLM\SOFTWARE\Wow6432Node\Microsoft\VisualStudio\SxS\VS7 /v 14.0
+			</execute>
+			<execute>
+				reg.exe query HKLM\SOFTWARE\Microsoft\MSBuild\ToolsVersions\14.0 /v MSBuildToolsPath
+			</execute>
+			<execute>
+				mkdir c:\build\release\win64_vc140\twisted\build
+			</execute>
+			<execute>
+				xcopy /s c:\twisted\src\* c:\build\release\win64_vc140\twisted\build
+			</execute>
+			<execute>
+				xcopy /s c:\twisted\src\* c:\build\release\win64_vc140\twisted\build
+			</execute>
+			<execute>
+				cd c:\build\release\win64_vc140\twisted\build
+			</execute>
+			<execute>
+				set LIB=;C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\amd64;C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\atlmfc\lib\amd64;C:\Program Files (x86)\Windows Kits\10\lib\10.0.10586.0\ucrt\x64;C:\Program Files (x86)\Windows Kits\10\lib\10.0.10586.0\um\x64;c:\build\release\win64_vc140\twisted\build
+			</execute>
+			<execute>
+				set CC=C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\amd64\cl.exe
+			</execute>
+			<execute>
+				set PYTHONPATH=d:/build/ob/bora-7542210/compcache/cayman_setuptools/ob-6883993/windows2012r2-vs2015U1\win64_vc140\Lib\site-packages;d:/build/ob/bora-7542210/compcache/cayman_zope_interface/ob-6884002/windows2012r2-vs2015U1\win64_vc140\Lib\site-packages;d:/build/ob/bora-7542210/compcache/cayman_six/ob-5693504/linux64\noarch\lib\python3.5\site-packages;d:/build/ob/bora-7542210/compcache/cayman_incremental/ob-5830043/windows-2016-vs2015-U3\win64_vc140\Lib\site-packages;d:/build/ob/bora-7542210/compcache/cayman_hyperlink/ob-7514782/linux64\noarch;c:\build\release\win64_vc140\twisted\build\dist\Lib\site-packages
+			</execute>
+			<execute>
+				set LIBPATH=;C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\lib\amd64;C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\atlmfc\lib\amd64;C:\Program Files (x86)\Windows Kits\10\lib\10.0.10586.0\ucrt\x64;C:\Program Files (x86)\Windows Kits\10\lib\10.0.10586.0\um\x64;c:\build\release\win64_vc140\twisted\build
+			</execute>
+			<execute>
+				set PATH=C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\amd64;;C:\Program Files (x86)\MSBuild\14.0\bin\amd64;C:\Program Files (x86)\Windows Kits\10\bin\x64;C:\Program Files (x86)\Windows Kits\10\bin\x86;C:\Windows\system32;C:\Windows
+			</execute>
+			<execute>
+				set INCLUDE=;C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\include;C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\atlmfc\include;C:\Program Files (x86)\Windows Kits\10\include\10.0.10586.0\ucrt;C:\Program Files (x86)\Windows Kits\10\include\10.0.10586.0\shared;C:\Program Files (x86)\Windows Kits\10\include\10.0.10586.0\um
+			</execute>
+			<execute>
+				d:/build/ob/bora-7542210/compcache/cayman_python/ob-5228134/windows2012r2-vs2015U1\win64_vc140\python.exe setup.py build
+			</execute>
+			<execute>
+				mkdir c:\build\release\win64_vc140\twisted\build\dist\Lib\site-packages
+			</execute>
+			<execute>
+				d:/build/ob/bora-7542210/compcache/cayman_python/ob-5228134/windows2012r2-vs2015U1\win64_vc140\python setup.py install --prefix=c:\build\release\win64_vc140\twisted\build\dist
+			</execute>
+			<execute>
+				mkdir d:/build/ob/bora-7542210/publish\win64_vc140\twisted.egg
+			</execute>
+			<execute>
+				xcopy /s c:\build\release\win64_vc140\twisted\build\dist\Lib\site-packages\Twisted-17.9.1.dev0-py3.5-win-amd64.egg\* d:\build\ob\bora-7542210\publish\win64_vc140\twisted.egg
+			</execute>
+		</process>
+		<deliveries>
+			<delivery dir="c:\build\release\twisted\staging\win64_vc140">
+				twisted.tgz
+			</delivery>
+		</deliveries>
+		<output>
+			win64_vc140
+		</output>
+	</build>
+</disclosure>

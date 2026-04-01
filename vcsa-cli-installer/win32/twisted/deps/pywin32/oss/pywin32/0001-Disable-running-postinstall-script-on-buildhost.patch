@@ -1,0 +1,38 @@
+From 6886cd91c2818c3d7272a695673ec5d99bf47a74 Mon Sep 17 00:00:00 2001
+From: Bharath Ramesh <rameshb@vmware.com>
+Date: Thu, 9 Oct 2014 11:46:47 -0700
+Subject: [PATCH 1/7] Disable running postinstall script on buildhost
+
+Reviewed by: akreher, arolett
+Review URL: https://reviewboard.eng.vmware.com/r/680629/
+---
+ setup.py | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/setup.py b/setup.py
+index 278e49e..9687b21 100644
+--- a/setup.py
++++ b/setup.py
+@@ -104,6 +104,7 @@ from distutils import log
+ # manifest.
+ static_crt_modules = ["winxpgui"]
+ 
++vmware_buildhost = True
+ 
+ from distutils.dep_util import newer_group, newer
+ from distutils import dir_util, file_util
+@@ -1429,7 +1430,10 @@ class my_install(install):
+         # some other directory than Python itself (eg, into a temp directory
+         # for bdist_wininst to use) - in which case we must *not* run our
+         # installer
+-        if not self.dry_run and not self.root:
++        # rameshb: The postinstall script registers pywin32 and installs the
++        # pywin32 dlls into the system folder. We will do the required
++        # postinstall steps manually.
++        if not self.dry_run and not self.root and not vmware_buildhost:
+             # We must run the script we just installed into Scripts, as it
+             # may have had 2to3 run over it.
+             filename = os.path.join(self.prefix, "Scripts", "pywin32_postinstall.py")
+-- 
+2.8.0.windows.1
+

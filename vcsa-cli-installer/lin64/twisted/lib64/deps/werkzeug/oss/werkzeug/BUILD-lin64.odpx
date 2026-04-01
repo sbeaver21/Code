@@ -1,0 +1,106 @@
+<?xml version="1.0" ?>
+<disclosure xmlns="http://osstp.eng.vmware.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://osstp.eng.vmware.com buildodpx.xsd">
+	<name>
+		werkzeug
+	</name>
+	<version>
+		vmware-base
+	</version>
+	<category>
+		Cayman
+	</category>
+	<components>
+		<component branch="master" changenumber="2f5b0602f5768b56cbc542935df9884549dd906c">
+			cayman
+		</component>
+		<component branch="3.4.0-rc2" changenumber="898cf37c4a31561eb0fdc44e27a7b8f5b7055b45">
+			cayman_cmake
+		</component>
+		<component branch="vmkernel-main" changenumber="54250acb4dcd133bc4da437d2ab7fb6ef86f8bfd">
+			cayman_esx_glibc
+		</component>
+		<component branch="vmware-gcc48" changenumber="105e17d70a161d3904100169846c54b4953fe5cf">
+			cayman_esx_toolchain
+		</component>
+		<component branch="vmware-python-3.5-latest-openssl-1.0.2" changenumber="a66dc34a9d8884f86fcbec3396c1aa883e6fd086">
+			cayman_python
+		</component>
+	</components>
+	<build suffix="lin64">
+		<target>
+			lin64
+		</target>
+		<files>
+			<file>
+				werkzeug-vmware-base.tar.gz
+			</file>
+			<file>
+				vtoolchain.cmake
+			</file>
+		</files>
+		<process>
+			<execute>
+				tar zxvf werkzeug-vmware-base.tar.gz
+			</execute>
+			<execute>
+				cd werkzeug-vmware-base
+			</execute>
+			<execute>
+				mkdir -p /tmp/build/release/lin64/werkzeug/build
+			</execute>
+			<execute>
+				cp -r /tmp/werkzeug/src/* /tmp/build/release/lin64/werkzeug/build
+			</execute>
+			<execute>
+				mkdir -p /build/mts/release/bora-7253891/publish/lin64/lib64/python3.5/site-packages
+			</execute>
+			<execute>
+				cp -r /tmp/werkzeug/src/* /tmp/build/release/lin64/werkzeug/build
+			</execute>
+			<execute>
+				cd /tmp/build/release/lin64/werkzeug/build
+			</execute>
+			<execute>
+				export GCC=/build/toolchain/lin32/gcc-4.4.3/bin/x86_64-linux5.0-gcc
+			</execute>
+			<execute>
+				export CC=/build/toolchain/lin32/gcc-4.4.3/bin/x86_64-linux5.0-gcc
+			</execute>
+			<execute>
+				export PYTHONPATH=/build/mts/release/bora-7253891/publish/lin64/lib64/python3.5/site-packages
+			</execute>
+			<execute>
+				export CXX=/build/toolchain/lin32/gcc-4.4.3/bin/x86_64-linux5.0-g++
+			</execute>
+			<execute>
+				export TMPDIR=/build/mts/release/bora-7253891/tmp
+			</execute>
+			<execute>
+				export PATH=/tmp/build/release/lin64/werkzeug/deps/bin:/build/toolchain/lin32/python-2.7.1/bin:/build/toolchain/lin32/coreutils-5.97/bin:/build/toolchain/lin32/findutils-4.2.27/bin:/build/toolchain/lin32/grep-2.5.1a/bin:
+			</execute>
+			<execute>
+				export COMPILER_DIR=/build/toolchain/lin32/gcc-4.4.3
+			</execute>
+			<execute>
+				export LD_LIBRARY_PATH=/tmp/build/release/lin64/werkzeug/deps/lib:/tmp/build/release/lin64/werkzeug/build/tmp/lib:
+			</execute>
+			<execute>
+				export GCC_DIR=/build/toolchain/lin32/gcc-4.4.3
+			</execute>
+			<execute>
+				/tmp/compcache/cayman_python/ob-5228134/linux64/lin64/bin/python3 setup.py build_ext -L/tmp/compcache/cayman_python/ob-5228134/linux64/lin64/lib64
+			</execute>
+			<execute>
+				/tmp/compcache/cayman_python/ob-5228134/linux64/lin64/bin/python3 setup.py install '--prefix=/build/mts/release/bora-7253891/publish/lin64'
+			</execute>
+		</process>
+		<deliveries>
+			<delivery dir="/tmp/build/release/werkzeug/staging/lin64">
+				werkzeug.tgz
+			</delivery>
+		</deliveries>
+		<output>
+			lin64
+		</output>
+	</build>
+</disclosure>

@@ -1,0 +1,154 @@
+<?xml version="1.0" ?>
+<disclosure xmlns="http://osstp.eng.vmware.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://osstp.eng.vmware.com buildodpx.xsd">
+	<name>
+		twisted
+	</name>
+	<version>
+		twisted-17.9.0
+	</version>
+	<category>
+		Cayman
+	</category>
+	<components>
+		<component branch="vmware-latest-python-3.5" changenumber="198f33e6a19bbf0745a6eda43b7254d10fb8570f">
+			cayman_automat
+		</component>
+		<component branch="master" changenumber="2f5b0602f5768b56cbc542935df9884549dd906c">
+			cayman
+		</component>
+		<component branch="vcsa-cli-installer" changenumber="52f1f8ea2a995752028fd61c3f467caeeba97437">
+			cayman_constantly
+		</component>
+		<component branch="vmware-master" changenumber="790fba996a10b8807c49a0c1c49eab45e64743cc">
+			cayman_hyperlink
+		</component>
+		<component branch="vmware-latest-python-3.5" changenumber="76c9edab935a8e8d8d03e35fce4c320e6f33862e">
+			cayman_incremental
+		</component>
+		<component branch="vmware-latest-python-3.5" changenumber="a9579257b2bcb091dd235e028386cf46a56edb2d">
+			cayman_python_attrs
+		</component>
+		<component branch="vmware-python-3.5-latest-openssl-1.0.2" changenumber="a66dc34a9d8884f86fcbec3396c1aa883e6fd086">
+			cayman_python
+		</component>
+		<component branch="vcsa-cli-installer" changenumber="d711463d4af4f7ad970c70b2270ab81b3d17ba50">
+			cayman_setuptools
+		</component>
+		<component branch="six-latest-python-3.5" changenumber="6df53a72d7152b63107d1429f0092b8cf536332b">
+			cayman_six
+		</component>
+		<component branch="vcsa-cli-installer" changenumber="7ad15ff8d022ec5f84873bb349d585c81b3fb54e">
+			cayman_zope_interface
+		</component>
+	</components>
+	<build suffix="mac64">
+		<target>
+			apple_mac64
+		</target>
+		<files>
+			<file>
+				twisted-twisted-17.9.0.tar.gz
+			</file>
+			<file>
+				README
+			</file>
+			<file>
+				twisted.spec
+			</file>
+		</files>
+		<process>
+			<execute>
+				tar zxvf twisted-twisted-17.9.0.tar.gz
+			</execute>
+			<execute>
+				cd twisted-twisted-17.9.0
+			</execute>
+			<execute>
+				mkdir -p /tmp/build/release/apple_mac64/twisted/build
+			</execute>
+			<execute>
+				cp -r /tmp/twisted/src/* /tmp/build/release/apple_mac64/twisted/build
+			</execute>
+			<execute>
+				cp -r /tmp/twisted/src/* /tmp/build/release/apple_mac64/twisted/build
+			</execute>
+			<execute>
+				cd /tmp/build/release/apple_mac64/twisted/build
+			</execute>
+			<execute>
+				export OTOOL=/build/toolchain/mac32/xcode-7.3/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/otool
+			</execute>
+			<execute>
+				export DSYMUTIL=/build/toolchain/mac32/xcode-7.3/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/dsymutil
+			</execute>
+			<execute>
+				export LDFLAGS=-Wl,-headerpad_max_install_names -arch x86_64 -isysroot /build/toolchain/mac32/xcode-7.3/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk -mmacosx-version-min=10.9
+			</execute>
+			<execute>
+				export CC=/build/toolchain/mac32/xcode-7.3/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang
+			</execute>
+			<execute>
+				export PYTHONPATH=/tmp/compcache/cayman_setuptools/ob-6883993/macosx-elcapitan/apple_mac64/lib/python3.5/site-packages:/tmp/compcache/cayman_zope_interface/ob-6884002/macosx-elcapitan/apple_mac64/lib/python3.5/site-packages:/tmp/compcache/cayman_six/ob-5693504/linux64/noarch/lib/python3.5/site-packages:/tmp/compcache/cayman_incremental/ob-5830043/windows-2016-vs2015-U3/win64_vc140/Lib/site-packages:/tmp/compcache/cayman_automat/ob-5838235/windows-2016-vs2015-U3/win64_vc140/Lib/site-packages:/tmp/compcache/cayman_constantly/ob-6889393/macosx-elcapitan/apple_mac64/lib/python3.5/site-packages:/tmp/compcache/cayman_python-attrs/ob-5829946/windows-2016-vs2015-U3/win64_vc140/Lib/site-packages:/tmp/compcache/cayman_hyperlink/ob-7514782/linux64/noarch:/tmp/build/release/apple_mac64/twisted/build/dist/lib/python3.5/site-packages
+			</execute>
+			<execute>
+				export MAKE=/build/toolchain/mac32/make-3.82/bin/make
+			</execute>
+			<execute>
+				export LDSHARED=/build/toolchain/mac32/xcode-7.3/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -Wl,-headerpad_max_install_names -arch x86_64 -isysroot /build/toolchain/mac32/xcode-7.3/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk -mmacosx-version-min=10.9 -bundle -undefined dynamic_lookup
+			</execute>
+			<execute>
+				export NMEDIT=/build/toolchain/mac32/xcode-7.3/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/nmedit
+			</execute>
+			<execute>
+				export LIPO=/build/toolchain/mac32/xcode-7.3/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/lipo
+			</execute>
+			<execute>
+				export DEVELOPER_DIR=/build/toolchain/mac32/xcode-7.3/Xcode.app/Contents/Developer
+			</execute>
+			<execute>
+				export CXX=/build/toolchain/mac32/xcode-7.3/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
+			</execute>
+			<execute>
+				export RANLIB=/build/toolchain/mac32/xcode-7.3/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib
+			</execute>
+			<execute>
+				export CFLAGS=-g -fPIC -pipe -Wall -arch x86_64 -isysroot /build/toolchain/mac32/xcode-7.3/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.11.sdk -mmacosx-version-min=10.9
+			</execute>
+			<execute>
+				export STRIP=/build/toolchain/mac32/xcode-7.3/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/strip
+			</execute>
+			<execute>
+				export PATH=/tmp/build/release/apple_mac64/twisted/deps/bin:
+			</execute>
+			<execute>
+				export TMPDIR=/build/mts/release/bora-7542210/tmp
+			</execute>
+			<execute>
+				export NM=/build/toolchain/mac32/xcode-7.3/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/nm
+			</execute>
+			<execute>
+				/build/toolchain/mac32/python-3.5.2-openssl1.0.2k/bin/python3 setup.py build
+			</execute>
+			<execute>
+				mkdir -p /tmp/build/release/apple_mac64/twisted/build/dist/lib/python3.5/site-packages
+			</execute>
+			<execute>
+				/build/toolchain/mac32/python-3.5.2-openssl1.0.2k/bin/python3 setup.py install '--prefix=/tmp/build/release/apple_mac64/twisted/build/dist'
+			</execute>
+			<execute>
+				mkdir -p /build/mts/release/bora-7542210/publish/apple_mac64/twisted.egg
+			</execute>
+			<execute>
+				cp -r /tmp/build/release/apple_mac64/twisted/build/dist/lib/python3.5/site-packages/Twisted-17.9.1.dev0-py3.5-macosx-10.6-intel.egg/* /build/mts/release/bora-7542210/publish/apple_mac64/twisted.egg
+			</execute>
+		</process>
+		<deliveries>
+			<delivery dir="/tmp/build/release/twisted/staging/apple_mac64">
+				twisted.tgz
+			</delivery>
+		</deliveries>
+		<output>
+			apple_mac64
+		</output>
+	</build>
+</disclosure>

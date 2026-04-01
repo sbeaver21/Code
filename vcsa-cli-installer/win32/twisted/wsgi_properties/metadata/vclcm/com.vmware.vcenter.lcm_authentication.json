@@ -1,0 +1,27 @@
+{
+    "authentication":
+    {
+        "product":
+        {
+            "name": "com.vmware.vcenter.lcm",
+            "schemes":
+            {
+                "OAuthScheme":
+                {
+                    "type": "SessionLess",
+                    "authenticationScheme": "com.vmware.vapi.std.security.oauth"
+                }
+            },
+            "packages":
+            {
+                "com.vmware.vcenter.lcm": ["OAuthScheme"]
+            },
+            "services":
+            {
+            },
+            "operations":
+            {
+            }
+        }
+    }
+}

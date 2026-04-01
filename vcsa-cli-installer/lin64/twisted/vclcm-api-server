@@ -1,0 +1,15 @@
+#!/bin/bash
+ROOT=$(dirname "$(readlink -f "$(which "$0")")")
+
+export LD_LIBRARY_PATH=$ROOT:$ROOT/openssl-1.0.2q/lib/:$ROOT/libffi-6.0.4/lib/
+
+$(command -v tput > /dev/null 2>&1)
+tput_ok=$?
+if [ "$tput_ok" == "0" ];
+then
+    export COLUMNS=$(tput cols)
+else
+    export COLUMNS=80
+fi
+
+exec "$ROOT/vclcm-api-server.bin" "$@"

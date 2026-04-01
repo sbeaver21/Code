@@ -1,0 +1,18 @@
+{
+  "builders": [
+    {
+      "type": "vsphere-clone",
+
+      "vcenter_server": "v00aimvcsa01p.mgmmirage.org",
+      "username":            "stephen.beaver@vsphere.local",
+      "password":            "Ch@ng3me123!@#",
+      "insecure_connection": "true",
+
+      "template": "Win_2022_Patched Standard",
+      "vm_name":  "alpine-clone-{{timestamp}}",
+      "host": "v33aivsw07p.mgmmirage.org",
+
+      "communicator": "none"
+    }
+  ]
+}

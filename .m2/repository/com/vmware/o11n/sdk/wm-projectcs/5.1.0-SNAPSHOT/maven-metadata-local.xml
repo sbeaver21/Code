@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata modelVersion="1.1.0">
+  <groupId>com.vmware.o11n.sdk</groupId>
+  <artifactId>wm-projectcs</artifactId>
+  <version>5.1.0-SNAPSHOT</version>
+  <versioning>
+    <snapshot>
+      <localCopy>true</localCopy>
+    </snapshot>
+    <lastUpdated>20141127174402</lastUpdated>
+    <snapshotVersions>
+      <snapshotVersion>
+        <extension>zip</extension>
+        <value>5.1.0-SNAPSHOT</value>
+        <updated>20141127174402</updated>
+      </snapshotVersion>
+      <snapshotVersion>
+        <extension>pom</extension>
+        <value>5.1.0-SNAPSHOT</value>
+        <updated>20141127174402</updated>
+      </snapshotVersion>
+    </snapshotVersions>
+  </versioning>
+</metadata>

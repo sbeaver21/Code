@@ -1,0 +1,9 @@
+{
+    "privilege":
+    {
+        "product":
+        {
+            "name": "com.vmware.vcenter.lcm"
+        }
+    }
+}

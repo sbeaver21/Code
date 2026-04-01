@@ -1,0 +1,27 @@
+#!/bin/bash
+binary_file="$0"
+cd "`dirname "$binary_file"`"
+
+base_file=`basename "$binary_file"`
+#find physical path if symlink in binary file path
+while [ -L "$base_file" ]
+do
+    base_file=`readlink "$base_file"`
+    cd `dirname "$base_file"`
+    base_file=`basename "$base_file"`
+done
+
+ROOT=`pwd -P`
+export \
+DYLD_LIBRARY_PATH=$ROOT:$ROOT/openssl-1.0.2q/lib/:$ROOT/libffi-3.0.13/lib/
+
+$(command -v tput > /dev/null 2>&1)
+tput_ok=$?
+if [ "$tput_ok" == "0" ];
+then
+    export COLUMNS=$(tput cols)
+else
+    export COLUMNS=80
+fi
+
+exec "$ROOT/vclcm-api-server.bin" $@
