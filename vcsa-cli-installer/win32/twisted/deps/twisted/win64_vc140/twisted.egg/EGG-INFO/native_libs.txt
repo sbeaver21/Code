@@ -1,2 +1,0 @@
-twisted/internet/iocpreactor/iocpsupport.cp35-win_amd64.pyd
-twisted/test/raiser.cp35-win_amd64.pyd
