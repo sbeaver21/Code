@@ -2,15 +2,11 @@
 
 This directory contains the **ABX Action** (`abx-install-minion.ps1`) used in VMware vRealize Automation (vRA) to automatically install, configure, and manage Salt Minions on provisioned virtual machines.
 
-## Source
-winget install --id Microsoft.PowerShell --source winget
-iex "& { $(irm https://aka.ms/install-powershell.ps1) } -UseMSI"
+## Files
 
-## File
-
-| File | Description |
-|------|-------------|
-| `abx-install-minion.ps1` | The ABX action script deployed to vRA. |
+| File | Version | Description |
+|------|---------|-------------|
+| [`Scripts/ABX/PowerShell/abx-install-minion.ps1`](./Scripts/ABX/PowerShell/abx-install-minion.ps1) | [v3.0.0](#version-history) | The ABX action script deployed to vRA. Installs, configures, and manages Salt Minions on provisioned VMs. |
 
 ## Overview
 
