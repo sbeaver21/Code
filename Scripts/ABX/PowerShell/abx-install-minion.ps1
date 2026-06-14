@@ -179,7 +179,7 @@ function handler($context, $inputs) {
     $mountPoints = $customProps.'custom.mountpoints'
     $diskLabels  = $customProps.'custom.mountlabels'
 
-    # Credentials for Guest Operations — convert plain-text secrets to SecureString immediately.
+    # Credentials for Guest Operations ΓÇö convert plain-text secrets to SecureString immediately.
     $isWindowsOS = ($osType -eq 'WINDOWS')
     if ($isWindowsOS) {
         $tmplUser = $context.getSecret($inputs.template_admin_windows)
@@ -340,7 +340,7 @@ if (`$existing -notmatch '^id:') { Add-Content -Path `$dropIn -Value 'id: $nameU
 
         # Single clean Linux install script. Uses interpreter-level expansion for host-side
         # variables ($nameUpper, $masterObj, $saltVersion) and escapes the rest with heredoc.
-        # Passwordless sudo is assumed for the serverops user — if not available, the caller
+        # Passwordless sudo is assumed for the serverops user ΓÇö if not available, the caller
         # should configure /etc/sudoers.d/serverops before this script runs.
         $linuxInstallScript = @"
 #!/usr/bin/env bash

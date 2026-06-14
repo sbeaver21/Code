@@ -1,14 +1,13 @@
 # Ignore ISO files
 *.iso
 
-
-
 # Ignore binary tools
 vcf-kubectl/
 vcf-cli/
 
-# Ignore VS Code settings (individual user preferences)
+# Ignore VS Code settings (individual user preferences) and workspace files
 .vscode/
+*.code-workspace
 
 # Ignore downloaded terraform providers
 .terraform/
@@ -51,6 +50,36 @@ __pycache__/
 *.vmdk
 *.ova
 *.ovf
+
+# PowerShell backup files
+*.ps1.bak
+*.ps1.old
+*.psm1.bak
+*.psd1.bak
+
+# Windows
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Logs and temp files
+*.log
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+*.bak
+*.old
+
+# GitHub
+*.patch
+*.diff
 
 .cloudclient/
 .dist/
