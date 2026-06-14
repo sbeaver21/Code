@@ -4,7 +4,7 @@
 *.psm1.bak
 *.psd1.bak
 
-# VS Code
+# Ignore VS Code settings (individual user preferences)
 .vscode/
 *.code-workspace
 
