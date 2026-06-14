@@ -4,11 +4,13 @@ PowerShell
 *.psm1.bak
 *.psd1.bak
 
-# Ignore VS Code settings (individual user preferences)
+# Ignore dist settings (individual user preferences)
 .dist/
+
+# Ignore VS Code settings (individual user preferences)
 .vscode/
 *.code-workspace
-Steve-Code.code-workspace
+
 
 # Windows
 Thumbs.db
