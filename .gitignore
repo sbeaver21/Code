@@ -8,8 +8,7 @@ PowerShell
 .dist/
 .vscode/
 *.code-workspace
-Steve-Code-Private.code-workspace
-Steve-Private.code-workspace
+Steve-Code.code-workspace
 
 # Windows
 Thumbs.db
