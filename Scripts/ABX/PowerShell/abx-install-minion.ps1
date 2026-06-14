@@ -172,7 +172,6 @@ function handler($context, $inputs) {
 
     # Domain/Machine Details
     $machineDomain = $customProps.'custom.machineDomain'
-    $website       = $customProps.'custom.website'
     $shortDomain   = $customProps.shortDomain
     $vmId          = $customProps.vmId
 
