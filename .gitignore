@@ -1,10 +1,11 @@
-# PowerShell
+PowerShell
 *.ps1.bak
 *.ps1.old
 *.psm1.bak
 *.psd1.bak
 
 # Ignore VS Code settings (individual user preferences)
+.dist/
 .vscode/
 *.code-workspace
 Steve-Code.code-workspace
