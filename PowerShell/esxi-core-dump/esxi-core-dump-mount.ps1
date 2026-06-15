@@ -1,11 +1,14 @@
 <#
 .SYNOPSIS
-    Configures core dump settings on ESXi hosts in a vCenter cluster.
+    Configures core dump settings on ESXi hosts in a vCenter cluster using an NFS share.
 .DESCRIPTION
     Connects to a vCenter Server, retrieves all ESXi hosts in a specified cluster,
-    and configures core dump settings (partition, file, smart dump) on each host.
-.PARAMETER DumpPartition
-    The name of the datastore or partition to use for core dumps.
+    mounts an NFS share on each host, and configures core dump to write to a file
+    on the NFS-mounted drive.
+.PARAMETER NFSServer
+    The IP address or FQDN of the NFS server hosting the core dump directory.
+.PARAMETER NFSDirectory
+    The export path on the NFS server (e.g. /coredumps).
 .PARAMETER VCenterFQDN
     The fully qualified domain name of the vCenter Server to connect to.
 .PARAMETER ClusterName
@@ -15,12 +18,12 @@
 .PARAMETER PassThru
     If specified, outputs the core dump file list for each host after configuration.
 .EXAMPLE
-    .\configureCoreDump.ps1 -DumpPartition "PFX1020_COREDUMP" -VCenterFQDN "es10vcsa04.central.nyced.org" -ClusterName "VC-UCSM22-B200M4-36-PS"
+    .\esxi-core-dump-mount.ps1 -NFSServer "10.0.0.100" -NFSDirectory "/coredumps" -VCenterFQDN "es10vcsa04.central.nyced.org" -ClusterName "VC-UCSM22-B200M4-36-PS"
 .EXAMPLE
-    .\configureCoreDump.ps1 -DumpPartition "PFX1020_COREDUMP" -VCenterFQDN "es10vcsa04.central.nyced.org" -ClusterName "VC-UCSM22-B200M4-36-PS" -PassThru
+    .\esxi-core-dump-mount.ps1 -NFSServer "10.0.0.100" -NFSDirectory "/coredumps" -VCenterFQDN "es10vcsa04.central.nyced.org" -ClusterName "VC-UCSM22-B200M4-36-PS" -PassThru
 .NOTES
     Author: Stephen Beaver
-    Version: 1.0.0
+    Version: 2.0.0
     Requires: PowerShell 5.1+, VMware PowerCLI 12.0+
 #>
 
@@ -28,13 +31,17 @@
 param(
     [Parameter(Mandatory = $true, Position = 0)]
     [ValidateNotNullOrEmpty()]
-    [string]$DumpPartition,
+    [string]$NFSServer,
 
     [Parameter(Mandatory = $true, Position = 1)]
     [ValidateNotNullOrEmpty()]
-    [string]$VCenterFQDN,
+    [string]$NFSDirectory,
 
     [Parameter(Mandatory = $true, Position = 2)]
+    [ValidateNotNullOrEmpty()]
+    [string]$VCenterFQDN,
+
+    [Parameter(Mandatory = $true, Position = 3)]
     [ValidateNotNullOrEmpty()]
     [string]$ClusterName,
 
@@ -51,7 +58,7 @@ param(
 #Requires -Modules @{ ModuleName = 'VMware.VimAutomation.Core'; ModuleVersion = '12.0' }
 
 begin {
-    Write-Verbose "Starting core dump configuration script"
+    Write-Verbose "Starting core dump NFS mount configuration script"
 
     # Configure certificate handling for the current session only (not persistent)
     Set-PowerCLIConfiguration -Scope Session -InvalidCertificateAction Ignore -Confirm:$false | Out-Null
@@ -107,7 +114,7 @@ process {
     foreach ($vmHost in $vmHosts) {
         $hostIndex++
         $progressParams = @{
-            Activity         = "Configuring core dump on ESXi hosts"
+            Activity         = "Configuring NFS core dump on ESXi hosts"
             Status           = "Processing host $($vmHost.Name) ($hostIndex of $($vmHosts.Count))"
             PercentComplete  = ($hostIndex / $vmHosts.Count) * 100
             CurrentOperation = $vmHost.Name
@@ -116,7 +123,7 @@ process {
 
         Write-Host "`nProcessing host: $($vmHost.Name)" -ForegroundColor Yellow
 
-        if ($PSCmdlet.ShouldProcess($vmHost.Name, "Configure core dump partition='$DumpPartition'")) {
+        if ($PSCmdlet.ShouldProcess($vmHost.Name, "Mount NFS share '$NFSDirectory' from '$NFSServer' and configure core dump file")) {
             try {
                 # Get ESXCLI interface for this host
                 $esxcli = Get-EsxCli -VMHost $vmHost -V2 -ErrorAction Stop
@@ -127,13 +134,14 @@ process {
                 $unconfigureArgs.unconfigure = $true
                 $esxcli.system.coredump.file.set.Invoke($unconfigureArgs)
 
-                # Step 2: Add the new core dump file on the specified datastore
-                Write-Verbose "  Adding core dump file: $($vmHost.Name) on datastore: $DumpPartition"
-                $addArgs = $esxcli.system.coredump.file.add.CreateArgs()
-                $addArgs.datastore = $DumpPartition
-                $addArgs.enable   = $true
-                $addArgs.file     = $vmHost.Name
-                $esxcli.system.coredump.file.add.Invoke($addArgs)
+                # Step 2: Mount the NFS share to make it available as a core dump target
+                Write-Verbose "  Mounting NFS share: $NFSServer`:$NFSDirectory"
+                $mountArgs = $esxcli.system.coredump.file.add.CreateArgs()
+                $mountArgs.server    = $NFSServer
+                $mountArgs.directory = $NFSDirectory
+                $mountArgs.enable    = $true
+                $mountArgs.file      = $vmHost.Name
+                $esxcli.system.coredump.file.add.Invoke($mountArgs)
 
                 # Step 3: Set the core dump file with smart dump enabled
                 Write-Verbose "  Enabling core dump with smart dump"
@@ -143,7 +151,7 @@ process {
                 $setArgs.unconfigure  = $false
                 $esxcli.system.coredump.file.set.Invoke($setArgs)
 
-                Write-Host "  Core dump configured successfully on $($vmHost.Name)" -ForegroundColor Green
+                Write-Host "  NFS core dump configured successfully on $($vmHost.Name)" -ForegroundColor Green
 
                 # Optionally output the core dump file list
                 if ($PassThru) {
@@ -152,12 +160,12 @@ process {
                 }
             }
             catch {
-                Write-Warning "Failed to configure core dump on host '$($vmHost.Name)': $_"
+                Write-Warning "Failed to configure NFS core dump on host '$($vmHost.Name)': $_"
             }
         }
     }
 
-    Write-Progress -Activity "Configuring core dump on ESXi hosts" -Completed
+    Write-Progress -Activity "Configuring NFS core dump on ESXi hosts" -Completed
 }
 
 end {
