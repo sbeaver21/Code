@@ -3,8 +3,24 @@
 This directory contains the **ABX Action** (`abx-install-minion.ps1`) used in VMware vRealize Automation (vRA) to automatically install, configure, and manage Salt Minions on provisioned virtual machines.
 
 ## Source
+
+PowerShell is required for this ABX action. Choose **one** of the following installation methods:
+
+### Option 1: Install via winget (recommended for Windows 11 / Windows Server 2022+)
+
+```powershell
 winget install --id Microsoft.PowerShell --source winget
+```
+
+### Option 2: Install via the official bootstrap script (legacy / offline-friendly)
+
+```powershell
 iex "& { $(irm https://aka.ms/install-powershell.ps1) } -UseMSI"
+```
+
+> **Note:** These are **alternative** methods — do not run both. Choose the one best suited for your environment.
+> The `winget` method is preferred on modern Windows systems; the bootstrap script works in more restricted environments (e.g., no winget available).
+> Both commands require an **elevated (Administrator)** PowerShell session.
 
 ## File
 
